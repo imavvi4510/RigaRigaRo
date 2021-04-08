@@ -11,15 +11,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(
-  process.env.MONGODB_URL ||
-    "mongodb+srv://abhi1234:abhi1234@cluster0.sl55d.mongodb.net/abhi?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  }
-);
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 mongoose.connection
   .once("open", function () {
     console.log("connection made");
@@ -43,8 +39,8 @@ mongoose.connection
 app.use("/api/users", userRouter);
 app.use("/api/p", productRouter);
 app.use("/api/orders", orderRouter);
-app.get('/api/config/paypal', (req, res) => {
-  res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
 app.get("/", (req, res) => {
   res.send("server is ready");
